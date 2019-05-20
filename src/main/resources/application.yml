@@ -1,8 +1,9 @@
 spring:
   cache:
-  cache-names: average,cities
-  caffeine:
-    spec: expireAfterAccess=3600s
+    type: caffeine
+    cache-names: average,cities
+    caffeine:
+      spec: expireAfterAccess=3600s, expireAfterWrite=3600s
 
 config:
   last-days: 3
