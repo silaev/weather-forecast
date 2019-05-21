@@ -23,7 +23,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -108,6 +107,8 @@ public class WeatherService {
 
     @Cacheable("cities")
     public Set<CityDto> getCities() {
+        log.debug("a new call to getCities");
+
         String path = "city.list.json";
         ObjectMapper mapper = new ObjectMapper();
         JavaType type = mapper.getTypeFactory().

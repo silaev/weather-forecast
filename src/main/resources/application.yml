@@ -3,12 +3,13 @@ spring:
     type: caffeine
     cache-names: average,cities
     caffeine:
-      spec: expireAfterAccess=3600s, expireAfterWrite=3600s
+      spec: expireAfterWrite=3600s
 
 config:
   last-days: 3
   url: https://api.openweathermap.org/data/2.5/forecast
-  appId: 4b4fa53c9f8089f20b824bf829a0e8ca
+  appId:
+  refresh-delay-cities: 600000 #10 min in milliseconds
 logging:
   level:
     com.silaev.weather: DEBUG

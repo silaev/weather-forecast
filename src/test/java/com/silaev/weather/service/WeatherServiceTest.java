@@ -1,13 +1,10 @@
 package com.silaev.weather.service;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.silaev.weather.converter.CityConverter;
 import com.silaev.weather.converter.WeatherSummaryStatisticsConverter;
 import com.silaev.weather.dto.AverageDto;
 import com.silaev.weather.dto.CityDto;
 import com.silaev.weather.dto.ForecastResponseDto;
-import com.silaev.weather.model.City;
 import com.silaev.weather.util.TestUtil;
 import com.silaev.weather.util.WeatherUtil;
 import org.junit.Before;
@@ -16,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +20,10 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 public class WeatherServiceTest {
@@ -64,15 +60,15 @@ public class WeatherServiceTest {
         BigDecimal nightlyAverage = BigDecimal.valueOf(-1.71);
         BigDecimal pressureAverage = BigDecimal.valueOf(1034.19);
         AverageDto averageDtoExpected =
-                TestUtil.mockAverageDto(dailyAverage, nightlyAverage, pressureAverage);
+            TestUtil.mockAverageDto(dailyAverage, nightlyAverage, pressureAverage);
 
         ResponseEntity<ForecastResponseDto> responseEntity =
-                new ResponseEntity<>(TestUtil.mockForecastResponseDto(), HttpStatus.OK);
+            new ResponseEntity<>(TestUtil.mockForecastResponseDto(), HttpStatus.OK);
         when(restTemplate.exchange(url, HttpMethod.GET, WeatherUtil.getHttpEntity(),
-                ForecastResponseDto.class)).thenReturn(responseEntity);
+            ForecastResponseDto.class)).thenReturn(responseEntity);
         //WHEN
         AverageDto averageDtoActual =
-                weatherService.getAverageTemperaturesAndPressure(cityCountryName, instantThreshold);
+            weatherService.getAverageTemperaturesAndPressure(cityCountryName, instantThreshold);
 
         //THEN
         assertNotNull(averageDtoActual);
